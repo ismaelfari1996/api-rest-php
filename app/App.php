@@ -11,10 +11,10 @@ class App{
             '/user' => 'UserController@save',
         ],
         'PUT' => [
-            '/users/{id}' => 'UserController@update',
+            '/user' => 'UserController@update',
         ],
         'DELETE' => [
-            '/users/{id}' => 'UserController@destroy',
+            '/user/{id}' => 'UserController@delete',
         ],
     ];
 

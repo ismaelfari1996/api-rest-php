@@ -31,4 +31,28 @@
         return [["INFO"=>"Save data successful"]];
 
     }
+
+    public function delete($id){
+        $stmt=$this->db->prepare('DELETE FROM '.$this->table.' WHERE id=:id');
+        $stmt->bindParam(':id',$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return [["INFO"=>"Registro eliminado"]];
+
+    }
+
+    public function update($data){
+        $data=json_decode($data,true);
+        $user=$this->getById($data['id']);
+        $user=new User($user[0]->id,$user[0]->name,$user[0]->email);
+
+        $name=isset($data['name'])?$data['name']:$user->getName();
+        $id=$user->getId();
+        $email=isset($data['email'])?$data['email']:$user->getEmail();
+        $stmt=$this->db->prepare("UPDATE ".$this->table." SET name=:name, email=:email WHERE id=:id");
+        $stmt->bindParam(":name",$name,PDO::PARAM_STR);
+        $stmt->bindParam(":email",$email,PDO::PARAM_STR);
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt->execute();
+        return [["INFO"=>"Registro actualizado"]];
+    }
  }

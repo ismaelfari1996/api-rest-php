@@ -11,6 +11,7 @@ class UserController{
     public function getAllUsers(){
         header('Content-Type: application/json');
         echo json_encode($this->userRepository->getAllUser());
+        http_response_code(200);
     }
 
     public function getById($id){
@@ -22,5 +23,16 @@ class UserController{
     public function save(){
         $jsonData=file_get_contents('php://input');
         echo json_encode($this->userRepository->save($jsonData));
+        http_response_code(200);
+    }
+
+    public function delete($id){
+        echo json_encode($this->userRepository->delete($id));
+        http_response_code(200);
+    }
+
+    public function update(){
+        $jsonData=file_get_contents('php://input');
+        echo json_encode($this->userRepository->update($jsonData));
     }
 }
